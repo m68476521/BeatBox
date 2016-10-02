@@ -16,6 +16,16 @@ import android.widget.Button;
  */
 
 public class BeatBoxFragment extends Fragment {
+
+    private BeatBox mBeatBox;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        mBeatBox = new BeatBox(getActivity());
+    }
+
     public static BeatBoxFragment newInstance() {
         return new BeatBoxFragment();
     }
@@ -35,11 +45,17 @@ public class BeatBoxFragment extends Fragment {
 
     private class SoundHolder extends RecyclerView.ViewHolder {
         private Button mButton;
+        private Sound mSound;
 
         public SoundHolder (LayoutInflater inflater, ViewGroup container) {
             super(inflater.inflate(R.layout.list_item_sound, container, false));
 
             mButton = (Button)itemView.findViewById(R.id.button);
+        }
+
+        public void bindSound(Sound sound) {
+            mSound = sound;
+            mButton.setText(mSound.getName());
         }
     }
 
