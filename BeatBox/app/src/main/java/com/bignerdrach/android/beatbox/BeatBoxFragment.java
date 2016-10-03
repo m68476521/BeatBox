@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.util.List;
+
 /**
  * Created by Mike on 10/1/16.
  * This class is a fragment to display info related to assets.
@@ -39,7 +41,7 @@ public class BeatBoxFragment extends Fragment {
                 .findViewById(R.id.fragment_beat_box_recycler_view);
 
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-        recyclerView.setAdapter(new SoundApadter());
+        recyclerView.setAdapter(new SoundAdapter(mBeatBox.getSounds()));
         return view;
     }
 
@@ -59,7 +61,13 @@ public class BeatBoxFragment extends Fragment {
         }
     }
 
-    public class SoundApadter extends RecyclerView.Adapter<SoundHolder> {
+    public class SoundAdapter extends RecyclerView.Adapter<SoundHolder> {
+        private List<Sound> mSounds;
+
+        public SoundAdapter(List<Sound> sounds) {
+            mSounds = sounds;
+        }
+
         @Override
         public SoundHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater inflater = LayoutInflater.from(getActivity());
@@ -68,12 +76,13 @@ public class BeatBoxFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(SoundHolder soundHolder, int position) {
-
+            Sound sound = mSounds.get(position);
+            soundHolder.bindSound(sound);
         }
 
         @Override
         public int getItemCount() {
-            return 0;
+            return mSounds.size();
         }
     }
 }
